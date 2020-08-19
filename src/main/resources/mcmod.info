@@ -3,13 +3,14 @@
     "modid": "crusadermod",
     "name": "Crusadermod",
     "description": "",
-    "version": "${version}",
-    "mcversion": "${mcversion}",
+    "version": "1.0.0",
+    "mcversion": "1.12.2",
     "url": "",
     "updateUrl": "",
     "authorList": [
       "Aquerr",
-      "AnutPL"
+      "AnutPL",
+      "Shimozuke"
     ],
     "credits": "",
     "logoFile": "",
