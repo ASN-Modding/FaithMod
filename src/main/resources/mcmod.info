@@ -1,0 +1,19 @@
+[
+  {
+    "modid": "crusadermod",
+    "name": "Crusadermod",
+    "description": "",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [
+      "Aquerr",
+      "AnutPL"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
