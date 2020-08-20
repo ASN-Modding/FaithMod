@@ -1,5 +1,8 @@
 package io.github.asnmodding.crusadermod.common.item;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
@@ -20,9 +23,15 @@ public class ItemHolyIron extends ItemBase
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
-        if (flagIn.isAdvanced())
+        if (!GuiScreen.isShiftKeyDown())
         {
-            tooltip.add(TextFormatting.YELLOW + "Created by using holy water with iron, can be used as a crafting ingredient");
+            tooltip.add(TextFormatting.GRAY + "Hold <Shift> for more info...");
+        }
+
+        if (GuiScreen.isShiftKeyDown())
+        {
+            tooltip.add(TextFormatting.YELLOW + "Created by using holy water with iron.");
+            tooltip.add(TextFormatting.YELLOW + "can be used as a crafting ingredient");
             tooltip.add(TextFormatting.YELLOW + "for blocks, tools, weapons and armor.");
         }
     }
