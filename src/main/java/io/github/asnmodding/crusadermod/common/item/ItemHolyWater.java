@@ -58,16 +58,10 @@ public class ItemHolyWater extends ItemBase
             curePlayerNegativePotionEffects(entityLiving);
 
             // Add Holy Water potion effects
-            // TODO: We could potentially create our own potion that concatenates all below effects.
-
-            final PotionEffect holyWaterPotionEffect = new PotionEffect(MobEffects.ABSORPTION, 2400, 1, false, true);
-            entityLiving.addPotionEffect(holyWaterPotionEffect);
-
-            final PotionEffect holyWaterPotionEffect2 = new PotionEffect(MobEffects.HEALTH_BOOST, 2400, 1);
-            entityLiving.addPotionEffect(holyWaterPotionEffect2);
-
-            final PotionEffect healingEffect = new PotionEffect(MobEffects.INSTANT_HEALTH, 1, 4, false, true);
-            entityLiving.addPotionEffect(healingEffect);
+            for (final PotionEffect potionEffect : getHolyWaterPotionEffects())
+            {
+                entityLiving.addPotionEffect(potionEffect);
+            }
         }
 
         if (entityplayer != null)
@@ -138,7 +132,7 @@ public class ItemHolyWater extends ItemBase
      *
      * @param entityLiving the entity that potion effects should be removed from.
      */
-    public void curePlayerNegativePotionEffects(EntityLivingBase entityLiving)
+    public static void curePlayerNegativePotionEffects(EntityLivingBase entityLiving)
     {
         if (entityLiving.getEntityWorld().isRemote)
             return;
@@ -151,5 +145,15 @@ public class ItemHolyWater extends ItemBase
                 entityLiving.removePotionEffect(potionEffect.getPotion());
             }
         }
+    }
+
+    public static List<PotionEffect> getHolyWaterPotionEffects()
+    {
+        // TODO: We could potentially create our own potion with all below effects.
+        final List<PotionEffect> potionEffects = new ArrayList<>(3);
+        potionEffects.add(new PotionEffect(MobEffects.ABSORPTION, 2400, 1, false, true));
+        potionEffects.add(new PotionEffect(MobEffects.HEALTH_BOOST, 2400, 1));
+        potionEffects.add(new PotionEffect(MobEffects.INSTANT_HEALTH, 1, 4, false, true));
+        return potionEffects;
     }
 }
