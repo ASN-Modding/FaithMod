@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "crusadermod:holy_water",
+      "data": 0
+    },
+    {
+      "item": "minecraft:iron_ingot",
+      "data": 0
+    }
+  ],
+  "result": {
+    "item": "crusadermod:holy_iron"
+  }
+}
