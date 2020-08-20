@@ -1,0 +1,41 @@
+{
+    "display": {
+        "title": {
+            "text": "Acquire divine material",
+            "color": "green",
+            "bold": false,
+            "italic": false,
+            "underlined": false,
+            "strikethrough": false,
+            "obfuscated": false
+        },
+        "description": {
+            "text": "Connect iron with holy water"
+        },
+        "icon": {
+            "item": "crusadermod:holy_iron"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false,
+        "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png"
+    },
+    "parent" : "crusadermod:root",
+    "criteria": {
+        "acquire_holy_iron": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "crusadermod:holy_iron",
+                        "count": {
+                            "min": 1,
+                            "max": 1
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "requirements": [["acquire_holy_iron"]]
+}
