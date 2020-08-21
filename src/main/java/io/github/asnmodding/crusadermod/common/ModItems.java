@@ -13,6 +13,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class ModItems
 {
+    // Items
     public static ItemHolyWater HOLY_WATER;
     public static ItemHolyIron HOLY_IRON;
 //    public static ItemHolyWaterSplash HOLY_WATER_SPLASH;
@@ -22,15 +23,16 @@ public class ModItems
 
     public static void init()
     {
-        //Add holy iron armor material
+        //Register holy iron armor material
         EnumHelper.addArmorMaterial("holy_iron", CrusaderMod.MOD_ID + ":holy_iron_armor", 15, new int[]{2, 5, 7, 2}, 10, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0F);
 
+        // Items
         HOLY_WATER = new ItemHolyWater();
         HOLY_IRON = new ItemHolyIron();
 //        HOLY_WATER_SPLASH = new ItemHolyWaterSplash();
 
+        // Holy Armor
         HOLY_IRON_HELMET = new HolyIronHelmet();
-
     }
 
     public static void registerItems(IForgeRegistry<Item> registry)
