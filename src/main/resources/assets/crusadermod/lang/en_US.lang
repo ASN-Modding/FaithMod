@@ -3,3 +3,6 @@ itemGroup.crusader_mod=Crusader Mod
 item.holy_water.name=Holy Water
 item.holy_iron.name=Holy Iron
 item.holy_water_splash.name=Holy Water Splash Potion
+
+# Armor
+item.holy_iron_helmet.name=Holy Iron Helmet
