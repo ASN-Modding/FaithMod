@@ -10,15 +10,14 @@
             "obfuscated": false
         },
         "description": {
-            "text": "Connect iron with holy water"
+            "text": "Combine holy water with iron"
         },
         "icon": {
             "item": "crusadermod:holy_iron"
         },
         "show_toast": true,
         "announce_to_chat": true,
-        "hidden": false,
-        "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png"
+        "hidden": false
     },
     "parent" : "crusadermod:root",
     "criteria": {
