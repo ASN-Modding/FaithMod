@@ -4,36 +4,27 @@ import io.github.asnmodding.crusadermod.CrusaderMod;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class HolyIronHelmet extends ItemArmor
+public class CrusaderChestplate extends ItemArmor
 {
-    public HolyIronHelmet()
+    public CrusaderChestplate()
     {
         super(ArmorMaterial.valueOf("holy_iron"), 1, EntityEquipmentSlot.HEAD);
-        setRegistryName("holy_iron_helmet");
-        setTranslationKey("holy_iron_helmet");
+        setRegistryName("crusader_chestplate");
+        setTranslationKey("crusader_chestplate");
         setCreativeTab(CrusaderMod.CREATIVE_TAB);
     }
 
     @Override
     public EntityEquipmentSlot getEquipmentSlot()
     {
-        return EntityEquipmentSlot.HEAD;
+        return EntityEquipmentSlot.CHEST;
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public ItemStack getDefaultInstance()
-    {
-        return super.getDefaultInstance();
-    }
-
+    //TODO: Remove this when custom texture for Holy Iron Helmet will be added.
     @Override
     public boolean hasEffect(ItemStack stack)
     {
         return true;
     }
-
 }
