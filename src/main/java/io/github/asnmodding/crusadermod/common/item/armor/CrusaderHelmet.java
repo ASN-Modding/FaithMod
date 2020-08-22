@@ -56,9 +56,9 @@ public class CrusaderHelmet extends ItemArmor
         {
 //             Give swiftness and absorption buff every 20 seconds.
             if (player.getActivePotionEffect(MobEffects.ABSORPTION) == null || player.getActivePotionEffect(MobEffects.ABSORPTION).getDuration() <= 1)
-                player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 400, 2));
+                player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 400, 1));
             if (player.getActivePotionEffect(MobEffects.SPEED) == null || player.getActivePotionEffect(MobEffects.SPEED).getDuration() <= 1)
-                player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 400, 2));
+                player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 400, 1));
         }
     }
 }
