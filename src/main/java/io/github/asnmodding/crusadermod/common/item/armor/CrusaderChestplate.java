@@ -9,7 +9,7 @@ public class CrusaderChestplate extends ItemArmor
 {
     public CrusaderChestplate()
     {
-        super(ArmorMaterial.valueOf("holy_iron"), 1, EntityEquipmentSlot.HEAD);
+        super(ArmorMaterial.valueOf("holy_iron"), 1, EntityEquipmentSlot.CHEST);
         setRegistryName("crusader_chestplate");
         setTranslationKey("crusader_chestplate");
         setCreativeTab(CrusaderMod.CREATIVE_TAB);

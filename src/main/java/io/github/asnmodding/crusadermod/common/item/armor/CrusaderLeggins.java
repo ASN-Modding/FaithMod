@@ -9,7 +9,7 @@ public class CrusaderLeggins extends ItemArmor
 {
     public CrusaderLeggins()
     {
-        super(ArmorMaterial.valueOf("holy_iron"), 1, EntityEquipmentSlot.HEAD);
+        super(ArmorMaterial.valueOf("holy_iron"), 1, EntityEquipmentSlot.LEGS);
         setRegistryName("crusader_leggins");
         setTranslationKey("crusader_leggins");
         setCreativeTab(CrusaderMod.CREATIVE_TAB);

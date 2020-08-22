@@ -9,7 +9,7 @@ public class CrusaderBoots extends ItemArmor
 {
     public CrusaderBoots()
     {
-        super(ArmorMaterial.valueOf("holy_iron"), 1, EntityEquipmentSlot.HEAD);
+        super(ArmorMaterial.valueOf("holy_iron"), 1, EntityEquipmentSlot.FEET);
         setRegistryName("crusader_boots");
         setTranslationKey("crusader_boots");
         setCreativeTab(CrusaderMod.CREATIVE_TAB);
@@ -18,7 +18,7 @@ public class CrusaderBoots extends ItemArmor
     @Override
     public EntityEquipmentSlot getEquipmentSlot()
     {
-        return EntityEquipmentSlot.LEGS;
+        return EntityEquipmentSlot.FEET;
     }
 
     //TODO: Remove this when custom texture for Holy Iron Helmet will be added.
