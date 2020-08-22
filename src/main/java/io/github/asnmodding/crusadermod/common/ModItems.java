@@ -6,7 +6,7 @@ import io.github.asnmodding.crusadermod.common.item.ItemHolyWater;
 import io.github.asnmodding.crusadermod.common.item.armor.CrusaderBoots;
 import io.github.asnmodding.crusadermod.common.item.armor.CrusaderChestplate;
 import io.github.asnmodding.crusadermod.common.item.armor.CrusaderHelmet;
-import io.github.asnmodding.crusadermod.common.item.armor.CrusaderLeggins;
+import io.github.asnmodding.crusadermod.common.item.armor.CrusaderLeggings;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
@@ -24,7 +24,7 @@ public class ModItems
     // Armor
     public static CrusaderHelmet CRUSADER_HELMET;
     public static CrusaderChestplate CRUSADER_CHESTPLATE;
-    public static CrusaderLeggins CRUSADER_LEGGINS;
+    public static CrusaderLeggings CRUSADER_LEGGINS;
     public static CrusaderBoots CRUSADER_BOOTS;
 
     public static void init()
@@ -40,7 +40,7 @@ public class ModItems
         // Holy Armor
         CRUSADER_HELMET = new CrusaderHelmet();
         CRUSADER_CHESTPLATE = new CrusaderChestplate();
-        CRUSADER_LEGGINS = new CrusaderLeggins();
+        CRUSADER_LEGGINS = new CrusaderLeggings();
         CRUSADER_BOOTS = new CrusaderBoots();
     }
 

@@ -5,13 +5,13 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 
-public class CrusaderLeggins extends ItemArmor
+public class CrusaderLeggings extends ItemArmor
 {
-    public CrusaderLeggins()
+    public CrusaderLeggings()
     {
         super(ArmorMaterial.valueOf("holy_iron"), 1, EntityEquipmentSlot.LEGS);
-        setRegistryName("crusader_leggins");
-        setTranslationKey("crusader_leggins");
+        setRegistryName("crusader_leggings");
+        setTranslationKey("crusader_leggings");
         setCreativeTab(CrusaderMod.CREATIVE_TAB);
     }
 
