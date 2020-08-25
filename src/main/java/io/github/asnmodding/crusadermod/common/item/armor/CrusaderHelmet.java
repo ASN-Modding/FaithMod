@@ -39,18 +39,18 @@ public class CrusaderHelmet extends ItemArmor
     {
         final ItemStack helmet = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
         final ItemStack chestplate = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-        final ItemStack leggins = player.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
+        final ItemStack leggings = player.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
         final ItemStack boots = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
 
         if (helmet == ItemStack.EMPTY || helmet.getItem() == Items.AIR
                 || chestplate == ItemStack.EMPTY || chestplate.getItem() == Items.AIR
-                || leggins == ItemStack.EMPTY || leggins.getItem() == Items.AIR
+                || leggings == ItemStack.EMPTY || leggings.getItem() == Items.AIR
                 || boots == ItemStack.EMPTY || boots.getItem() == Items.AIR)
             return;
 
         else if (helmet.getItem() == this
                 && chestplate.getItem() == ModItems.CRUSADER_CHESTPLATE
-                && leggins.getItem() == ModItems.CRUSADER_LEGGINS
+                && leggings.getItem() == ModItems.CRUSADER_LEGGINS
                 && boots.getItem() == ModItems.CRUSADER_BOOTS
                 )
         {
