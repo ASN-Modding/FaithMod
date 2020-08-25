@@ -28,7 +28,7 @@ public class CommonProxy implements Proxy
         ModTileEntities.init();
 
         // Register entities
-        EntityRegistry.registerModEntity(new ResourceLocation("crusadermod", "priest"), PriestVillager.class, "Priest", 0, CrusaderMod.INSTANCE, 10, 10, false, 0x000000, 0x5f5f5f);
+        EntityRegistry.registerModEntity(new ResourceLocation("crusadermod", "priest"), PriestVillager.class, "priest", 0, CrusaderMod.INSTANCE, 10, 10, false, 0x000000, 0x5f5f5f);
         EntityRegistry.addSpawn(PriestVillager.class, 1, 1, 1, EnumCreatureType.CREATURE, ForgeRegistries.BIOMES.getValues().toArray(new Biome[0]));
     }
 

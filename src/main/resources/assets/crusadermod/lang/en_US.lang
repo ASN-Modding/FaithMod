@@ -9,3 +9,6 @@ item.crusader_helmet.name=Crusader Helmet
 item.crusader_chestplate.name=Crusader Chestplate
 item.crusader_leggings.name=Crusader Leggins
 item.crusader_boots.name=Crusader Boots
+
+# Entities
+entity.priest.name=Priest

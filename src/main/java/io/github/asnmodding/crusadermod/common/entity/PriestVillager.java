@@ -3,23 +3,27 @@ package io.github.asnmodding.crusadermod.common.entity;
 import com.google.common.base.Predicate;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
-import net.minecraft.entity.monster.EntitySpellcasterIllager;
+import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.village.Village;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 
 public class PriestVillager extends EntityCreature implements IRangedAttackMob
 {
-    private static final Predicate<Entity> UNDEAD = entity -> entity instanceof EntityLivingBase && ((EntityLivingBase)entity).getCreatureAttribute() == EnumCreatureAttribute.UNDEAD && ((EntityLivingBase)entity).attackable();
+    private static final Predicate<Entity> UNDEAD = entity -> entity instanceof EntityLivingBase
+            && (((EntityLivingBase)entity).getCreatureAttribute() == EnumCreatureAttribute.UNDEAD || entity instanceof EntityZombie || entity instanceof EntitySpider) && ((EntityLivingBase)entity).attackable();
     private static final Predicate<Entity> FRIENDLIES = entity -> (entity instanceof EntityVillager || entity instanceof EntityPlayer) && ((EntityLivingBase)entity).getCreatureAttribute() != EnumCreatureAttribute.UNDEAD;
 
     private Village village;
@@ -32,6 +36,8 @@ public class PriestVillager extends EntityCreature implements IRangedAttackMob
         super(worldIn);
         setCustomNameTag("Priest");
         setAlwaysRenderNameTag(true);
+
+        enablePersistence();
     }
 
     @Override
@@ -39,25 +45,52 @@ public class PriestVillager extends EntityCreature implements IRangedAttackMob
     {
         super.applyEntityAttributes();
 
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
 //        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.);
     }
 
     @Override
     protected void initEntityAI()
     {
-//        this.tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 0.9D, 32.0F));
+        this.tasks.addTask(1, new EntityAIAttackMelee(this, 1.0D, true));
+        this.tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 0.9D, 32.0F));
+        this.tasks.addTask(3, new EntityAIMoveThroughVillage(this, 0.6D, true));
+        this.tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, 0.6D));
+        this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 0.6D));
 
-        this.tasks.addTask(1, new EntityAIHeal(this));
-        this.tasks.addTask(2, new EntityAIHealOthers(this));
-        this.tasks.addTask(2, new EntityAIAttackMelee(this, 1, false));
-//        this.tasks.addTask(2, new EntityAIAttackRanged(this, 0.5D, 60, 10.F));
-        this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F, 0.2F));
-        this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
-        this.tasks.addTask(3, new EntityAILookIdle(this));
+        this.tasks.addTask(8, new EntityAIHeal(this));
+        this.tasks.addTask(8, new EntityAIHealOthers(this));
+
+        this.tasks.addTask(2, new EntityAIMoveIndoors(this));
+        this.tasks.addTask(4, new EntityAIOpenDoor(this, true));
+        this.tasks.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F, 0.2F));
+
+        this.tasks.addTask(8, new EntityAILookIdle(this));
 
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityLiving.class, 2, true, true, UNDEAD));
     }
+
+    //    protected void initEntityAI()
+//    {
+//        this.tasks.addTask(0, new EntityAISwimming(this));
+//        this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityZombie.class, 8.0F, 0.6D, 0.6D));
+//        this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityEvoker.class, 12.0F, 0.8D, 0.8D));
+//        this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityVindicator.class, 8.0F, 0.8D, 0.8D));
+//        this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityVex.class, 8.0F, 0.6D, 0.6D));
+//        this.tasks.addTask(1, new EntityAITradePlayer(this));
+//        this.tasks.addTask(1, new EntityAILookAtTradePlayer(this));
+//        this.tasks.addTask(2, new EntityAIMoveIndoors(this));
+//        this.tasks.addTask(3, new EntityAIRestrictOpenDoor(this));
+//        this.tasks.addTask(4, new EntityAIOpenDoor(this, true));
+//        this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 0.6D));
+//        this.tasks.addTask(6, new EntityAIVillagerMate(this));
+//        this.tasks.addTask(7, new EntityAIFollowGolem(this));
+//        this.tasks.addTask(9, new EntityAIWatchClosest2(this, EntityPlayer.class, 3.0F, 1.0F));
+//        this.tasks.addTask(9, new EntityAIVillagerInteract(this));
+//        this.tasks.addTask(9, new EntityAIWanderAvoidWater(this, 0.6D));
+//        this.tasks.addTask(10, new EntityAIWatchClosest(this, EntityLiving.class, 8.0F));
+//    }
 
     @Override
     public boolean getCanSpawnHere()
@@ -70,6 +103,19 @@ public class PriestVillager extends EntityCreature implements IRangedAttackMob
     }
 
     @Override
+    protected boolean canDespawn()
+    {
+        return false;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound()
+    {
+        return SoundEvents.ENTITY_VILLAGER_AMBIENT;
+    }
+
+    @Override
     protected void updateAITasks()
     {
         if (--this.randomTickDivider <= 0)
@@ -79,6 +125,28 @@ public class PriestVillager extends EntityCreature implements IRangedAttackMob
             this.randomTickDivider = 70 + this.rand.nextInt(50);
             this.village = this.world.getVillageCollection().getNearestVillage(blockpos, 32);
         }
+    }
+
+    @Override
+    public boolean attackEntityAsMob(Entity entityIn)
+    {
+        this.world.setEntityState(this, (byte)4);
+        boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float)(7 + this.rand.nextInt(15)));
+
+        if (flag)
+        {
+            entityIn.motionY += 0.4000000059604645D;
+            this.applyEnchantments(this, entityIn);
+        }
+
+        this.playSound(SoundEvents.ENTITY_IRONGOLEM_ATTACK, 1.0F, 1.0F);
+        return flag;
+    }
+
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount)
+    {
+        return super.attackEntityFrom(source, amount);
     }
 
     @Override
@@ -101,27 +169,6 @@ public class PriestVillager extends EntityCreature implements IRangedAttackMob
     {
 
     }
-
-//    protected void initEntityAI()
-//    {
-//        this.tasks.addTask(0, new EntityAISwimming(this));
-//        this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityZombie.class, 8.0F, 0.6D, 0.6D));
-//        this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityEvoker.class, 12.0F, 0.8D, 0.8D));
-//        this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityVindicator.class, 8.0F, 0.8D, 0.8D));
-//        this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityVex.class, 8.0F, 0.6D, 0.6D));
-//        this.tasks.addTask(1, new EntityAITradePlayer(this));
-//        this.tasks.addTask(1, new EntityAILookAtTradePlayer(this));
-//        this.tasks.addTask(2, new EntityAIMoveIndoors(this));
-//        this.tasks.addTask(3, new EntityAIRestrictOpenDoor(this));
-//        this.tasks.addTask(4, new EntityAIOpenDoor(this, true));
-//        this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 0.6D));
-//        this.tasks.addTask(6, new EntityAIVillagerMate(this));
-//        this.tasks.addTask(7, new EntityAIFollowGolem(this));
-//        this.tasks.addTask(9, new EntityAIWatchClosest2(this, EntityPlayer.class, 3.0F, 1.0F));
-//        this.tasks.addTask(9, new EntityAIVillagerInteract(this));
-//        this.tasks.addTask(9, new EntityAIWanderAvoidWater(this, 0.6D));
-//        this.tasks.addTask(10, new EntityAIWatchClosest(this, EntityLiving.class, 8.0F));
-//    }
 
     public void healEntity(EntityLivingBase entity)
     {
