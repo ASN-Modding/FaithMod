@@ -26,5 +26,6 @@ public class RegistryHandler
     public static void onModelRegister(final ModelRegistryEvent event)
     {
         ModItems.registerModels();
+        ModBlocks.registerModels();
     }
 }

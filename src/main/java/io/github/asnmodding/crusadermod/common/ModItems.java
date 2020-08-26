@@ -66,7 +66,7 @@ public class ModItems
         registerModel(CRUSADER_BOOTS);
     }
 
-    private static void registerModel(final Item item)
+    public static void registerModel(final Item item)
     {
         ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
     }

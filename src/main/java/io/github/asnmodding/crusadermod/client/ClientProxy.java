@@ -35,7 +35,7 @@ public class ClientProxy extends CommonProxy
         super.init(event);
 
 //        ModItems.registerModels();
-        ModBlocks.registerModels();
+//        ModBlocks.registerModels();
         ModTileEntities.registerModels();
     }
 
