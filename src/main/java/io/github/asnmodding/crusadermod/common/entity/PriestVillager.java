@@ -1,6 +1,9 @@
 package io.github.asnmodding.crusadermod.common.entity;
 
 import com.google.common.base.Predicate;
+import io.github.asnmodding.crusadermod.common.entity.ai.priest.PriestAIHeal;
+import io.github.asnmodding.crusadermod.common.entity.ai.priest.PriestAIHealOthers;
+import io.github.asnmodding.crusadermod.common.entity.ai.priest.PriestAINearestHealableTarget;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.*;
@@ -34,7 +37,7 @@ public class PriestVillager extends EntityCreature implements IRangedAttackMob
             && (((EntityLivingBase)entity).getCreatureAttribute() == EnumCreatureAttribute.UNDEAD || entity instanceof EntityZombie || entity instanceof EntitySpider) && ((EntityLivingBase)entity).attackable();
     private static final Predicate<Entity> WOUNDED_FRIENDLIES = entity -> (entity instanceof EntityVillager || entity instanceof EntityPlayer) && ((EntityLivingBase)entity).getCreatureAttribute() != EnumCreatureAttribute.UNDEAD && ((EntityLivingBase)entity).getHealth() < ((EntityLivingBase)entity).getMaxHealth();
 
-    private static final DataParameter<Integer> HEALING_ENTITY_ID = EntityDataManager.<Integer>createKey(EntityGuardian.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> HEALING_ENTITY_ID = EntityDataManager.createKey(EntityGuardian.class, DataSerializers.VARINT);
 
     private Village village;
 
@@ -74,42 +77,24 @@ public class PriestVillager extends EntityCreature implements IRangedAttackMob
     @Override
     protected void initEntityAI()
     {
-        this.tasks.addTask(1, new EntityAIAttackMelee(this, 1.0D, true));
+        this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(2, new EntityAIAttackMelee(this, 1.0D, true));
+        this.tasks.addTask(2, new EntityAIMoveIndoors(this));
         this.tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 0.9D, 32.0F));
+        this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F, 0.2F));
+        this.tasks.addTask(3, new EntityAIRestrictOpenDoor(this));
         this.tasks.addTask(3, new EntityAIMoveThroughVillage(this, 0.5D, true));
         this.tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, 0.6D));
-        this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 0.6D));
-        this.tasks.addTask(4, new EntityAIHeal(this));
-        this.tasks.addTask(4, new EntityAIHealOthers(this));
-        this.tasks.addTask(2, new EntityAIMoveIndoors(this));
-        this.tasks.addTask(3, new EntityAIRestrictOpenDoor(this));
+        this.tasks.addTask(4, new PriestAIHeal(this));
+        this.tasks.addTask(4, new PriestAIHealOthers(this));
         this.tasks.addTask(4, new EntityAIOpenDoor(this, true));
-        this.tasks.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F, 0.2F));
-        this.tasks.addTask(8, new EntityAILookIdle(this));
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityLiving.class, 2, true, true, UNDEAD));
-    }
+        this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 0.6D));
+        this.tasks.addTask(6, new EntityAILookIdle(this));
 
-    //    protected void initEntityAI()
-//    {
-//        this.tasks.addTask(0, new EntityAISwimming(this));
-//        this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityZombie.class, 8.0F, 0.6D, 0.6D));
-//        this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityEvoker.class, 12.0F, 0.8D, 0.8D));
-//        this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityVindicator.class, 8.0F, 0.8D, 0.8D));
-//        this.tasks.addTask(1, new EntityAIAvoidEntity(this, EntityVex.class, 8.0F, 0.6D, 0.6D));
-//        this.tasks.addTask(1, new EntityAITradePlayer(this));
-//        this.tasks.addTask(1, new EntityAILookAtTradePlayer(this));
-//        this.tasks.addTask(2, new EntityAIMoveIndoors(this));
-//        this.tasks.addTask(3, new EntityAIRestrictOpenDoor(this));
-//        this.tasks.addTask(4, new EntityAIOpenDoor(this, true));
-//        this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 0.6D));
-//        this.tasks.addTask(6, new EntityAIVillagerMate(this));
-//        this.tasks.addTask(7, new EntityAIFollowGolem(this));
-//        this.tasks.addTask(9, new EntityAIWatchClosest2(this, EntityPlayer.class, 3.0F, 1.0F));
-//        this.tasks.addTask(9, new EntityAIVillagerInteract(this));
-//        this.tasks.addTask(9, new EntityAIWanderAvoidWater(this, 0.6D));
-//        this.tasks.addTask(10, new EntityAIWatchClosest(this, EntityLiving.class, 8.0F));
-//    }
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
+        this.targetTasks.addTask(2, new PriestAINearestHealableTarget(this));
+        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityLiving.class, 2, true, true, UNDEAD));
+    }
 
     @Override
     public boolean getCanSpawnHere()
@@ -150,12 +135,6 @@ public class PriestVillager extends EntityCreature implements IRangedAttackMob
     public void onUpdate()
     {
         super.onUpdate();
-
-//        if (isHealing)
-//        {
-//            spawnHealParticles();
-//            this.isHealing = false;
-//        }
     }
 
     public void setHealingTarget(EntityLivingBase healingTarget)
@@ -350,7 +329,7 @@ public class PriestVillager extends EntityCreature implements IRangedAttackMob
 //        }
     }
 
-    private EntityLivingBase getNearestFriendlyEntity()
+    public EntityLivingBase getNearestFriendlyEntity()
     {
         // Friendly entities = Villagers, Players, Crusaders.
 
@@ -364,140 +343,5 @@ public class PriestVillager extends EntityCreature implements IRangedAttackMob
         //Sorts by distance.
         entities.sort(new EntityAINearestAttackableTarget.Sorter(this));
         return entities.get(0);
-    }
-
-    public static class EntityAIHeal extends EntityAIBase
-    {
-        private final PriestVillager priest;
-
-        private int healInterval = 60;
-        private int healTime;
-
-        public EntityAIHeal(final PriestVillager priest)
-        {
-            this.priest = priest;
-            setMutexBits(3);
-        }
-
-        @Override
-        public boolean shouldExecute()
-        {
-            return this.priest.getHealth() < this.priest.getMaxHealth();
-        }
-
-        @Override
-        public void startExecuting()
-        {
-            this.priest.setHealingTarget(this.priest);
-
-            // Play heal sound
-//            this.priest.playSound(SoundEvents.ENTITY_ILLAGER_CAST_SPELL, 1.0F, 1.0F);
-        }
-
-        @Override
-        public boolean shouldContinueExecuting()
-        {
-            if (this.priest.getHealth() < this.priest.getMaxHealth())
-            {
-                return true;
-            }
-            else
-            {
-                this.priest.setHealingTarget(null);
-                return false;
-            }
-        }
-
-        @Override
-        public void updateTask()
-        {
-            this.priest.startHealing();
-
-            if (--this.healTime <= 0)
-            {
-                this.priest.healHealingTarget();
-                this.healTime = this.healInterval;
-
-                this.priest.world.spawnParticle(EnumParticleTypes.HEART, this.priest.posX + 5, this.priest.posY + 5, this.priest.posZ + 5, 5, 5, 5);
-            }
-        }
-    }
-
-    public static class EntityAIHealOthers extends EntityAIBase
-    {
-        private final PriestVillager priest;
-        private EntityLivingBase nearestWoundedFriendlyEntity;
-        private int healInterval = 60;
-        private int healTime;
-
-        public EntityAIHealOthers(PriestVillager priest)
-        {
-            this.priest = priest;
-            setMutexBits(3);
-        }
-
-        @Override
-        public boolean shouldExecute()
-        {
-            this.nearestWoundedFriendlyEntity = this.priest.getNearestFriendlyEntity();
-            return this.nearestWoundedFriendlyEntity != null;
-        }
-
-        @Override
-        public void startExecuting()
-        {
-            this.priest.setHealingTarget(this.nearestWoundedFriendlyEntity);
-        }
-
-        @Override
-        public boolean shouldContinueExecuting()
-        {
-            if (this.nearestWoundedFriendlyEntity.getHealth() >= this.nearestWoundedFriendlyEntity.getMaxHealth() || this.nearestWoundedFriendlyEntity.getHealth() <= 0)
-            {
-                this.priest.setHealingTarget(null);
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        @Override
-        public void resetTask()
-        {
-            this.healTime = 0;
-            this.nearestWoundedFriendlyEntity = null;
-        }
-
-        @Override
-        public void updateTask()
-        {
-            final EntityLivingBase healingTarget = this.priest.getHealingTarget();
-            if (healingTarget == null)
-                return;
-
-            this.priest.getLookHelper().setLookPositionWithEntity(this.nearestWoundedFriendlyEntity, (float)(this.priest.getHorizontalFaceSpeed() + 20), (float)this.priest.getVerticalFaceSpeed());
-
-            if (this.priest.getDistanceSq(this.nearestWoundedFriendlyEntity) < 12.0d)
-            {
-                this.priest.getNavigator().clearPath();
-            }
-            else
-            {
-                this.priest.getNavigator().tryMoveToEntityLiving(this.nearestWoundedFriendlyEntity, 0.7);
-            }
-
-            if (this.nearestWoundedFriendlyEntity.getDistanceSq(this.priest) <= 10D)
-            {
-                this.priest.startHealing();
-
-                if (--this.healTime <= 0)
-                {
-                    this.priest.healHealingTarget();
-                    this.healTime = this.healInterval;
-                }
-            }
-        }
     }
 }
