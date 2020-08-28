@@ -15,13 +15,13 @@ public class PriestVillagerRender extends RenderLiving<PriestVillager>
 {
     public PriestVillagerRender(RenderManager renderManagerIn)
     {
-        super(renderManagerIn, new ModelPlayer(0.0F, false), 0.5F);
+        super(renderManagerIn, new ModelPlayer(0.0F, true), 0.5F);
     }
 
     @Nullable
     @Override
     protected ResourceLocation getEntityTexture(PriestVillager entity)
     {
-        return new ResourceLocation("textures/entity/steve.png");
+        return new ResourceLocation("textures/entity/alex.png");
     }
 }
