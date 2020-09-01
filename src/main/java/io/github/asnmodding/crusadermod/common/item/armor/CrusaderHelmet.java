@@ -54,11 +54,19 @@ public class CrusaderHelmet extends ItemArmor
                 && boots.getItem() == ModItems.CRUSADER_BOOTS
                 )
         {
-//             Give swiftness and absorption buff every 20 seconds.
-            if (player.getActivePotionEffect(MobEffects.ABSORPTION) == null || player.getActivePotionEffect(MobEffects.ABSORPTION).getDuration() <= 1)
-                player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 400, 1));
-            if (player.getActivePotionEffect(MobEffects.SPEED) == null || player.getActivePotionEffect(MobEffects.SPEED).getDuration() <= 1)
-                player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 400, 1));
+            if(player.world.isRemote)
+            {
+                // Spawn holy armor particles
+
+            }
+            else
+            {
+                // Give swiftness and absorption buff every 20 seconds.
+                if (player.getActivePotionEffect(MobEffects.ABSORPTION) == null || player.getActivePotionEffect(MobEffects.ABSORPTION).getDuration() <= 1)
+                    player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 400, 1));
+                if (player.getActivePotionEffect(MobEffects.SPEED) == null || player.getActivePotionEffect(MobEffects.SPEED).getDuration() <= 1)
+                    player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 400, 1));
+            }
         }
     }
 }
