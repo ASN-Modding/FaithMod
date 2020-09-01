@@ -46,6 +46,12 @@ public class PriestAIHeal extends EntityAIBase
     }
 
     @Override
+    public void resetTask()
+    {
+        this.healTime = 0;
+    }
+
+    @Override
     public void updateTask()
     {
         this.priest.startHealing();

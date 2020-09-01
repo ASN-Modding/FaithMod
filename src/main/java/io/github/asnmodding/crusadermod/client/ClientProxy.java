@@ -1,6 +1,6 @@
 package io.github.asnmodding.crusadermod.client;
 
-import io.github.asnmodding.crusadermod.client.render.PriestVillagerRender;
+import io.github.asnmodding.crusadermod.client.renderer.PriestVillagerRender;
 import io.github.asnmodding.crusadermod.common.CommonProxy;
 import io.github.asnmodding.crusadermod.common.ModBlocks;
 import io.github.asnmodding.crusadermod.common.ModTileEntities;

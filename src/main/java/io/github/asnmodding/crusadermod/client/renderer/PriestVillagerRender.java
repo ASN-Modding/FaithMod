@@ -1,6 +1,7 @@
-package io.github.asnmodding.crusadermod.client.render;
+package io.github.asnmodding.crusadermod.client.renderer;
 
 import io.github.asnmodding.crusadermod.CrusaderMod;
+import io.github.asnmodding.crusadermod.client.model.ModelPriest;
 import io.github.asnmodding.crusadermod.common.entity.EntityPriest;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;

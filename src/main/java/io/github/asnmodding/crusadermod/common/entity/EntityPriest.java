@@ -2,20 +2,24 @@ package io.github.asnmodding.crusadermod.common.entity;
 
 import com.google.common.base.Predicate;
 import io.github.asnmodding.crusadermod.common.ModItems;
+import io.github.asnmodding.crusadermod.common.entity.ai.priest.PriestAIAttack;
 import io.github.asnmodding.crusadermod.common.entity.ai.priest.PriestAIHeal;
 import io.github.asnmodding.crusadermod.common.entity.ai.priest.PriestAIHealOthers;
 import io.github.asnmodding.crusadermod.common.entity.ai.priest.PriestAINearestHealableTarget;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
-import net.minecraft.entity.monster.*;
+import net.minecraft.entity.monster.AbstractSkeleton;
+import net.minecraft.entity.monster.EntityGuardian;
+import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityShulkerBullet;
+import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -26,11 +30,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.village.Village;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -55,16 +58,17 @@ public class EntityPriest extends EntityCreature implements IRangedAttackMob
     };
 
     private static final DataParameter<Integer> HEALING_ENTITY_ID = EntityDataManager.createKey(EntityGuardian.class, DataSerializers.VARINT);
+    private static final DataParameter<Boolean> SWINGING_ARMS = EntityDataManager.<Boolean>createKey(AbstractSkeleton.class, DataSerializers.BOOLEAN);
 
-    private Village village;
+//    private Village village;
 
-    private BlockPos home;
+//    private BlockPos home;
 
     private EntityLivingBase healingTarget;
 
 //    private boolean isHealing;
 
-    private int randomTickDivider;
+//    private int randomTickDivider;
 
     private double angle = 0;
     private final double angleIncrement = 2.0 / 28.0 * Math.PI;
@@ -75,35 +79,35 @@ public class EntityPriest extends EntityCreature implements IRangedAttackMob
     public EntityPriest(World worldIn)
     {
         super(worldIn);
-        setCustomNameTag("Priest");
-        setAlwaysRenderNameTag(true);
-
-        enablePersistence();
+//        enablePersistence();
         ((PathNavigateGround)this.getNavigator()).setBreakDoors(true);
         this.dataManager.register(HEALING_ENTITY_ID, 0);
+        this.dataManager.register(SWINGING_ARMS, false);
     }
 
     @Override
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
+        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1.0D);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2.0D);
     }
 
     @Override
     protected void initEntityAI()
     {
         this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(1, new EntityAIAttackMelee(this, 1.0D, true));
-        this.tasks.addTask(1, new PriestAIHeal(this));
-        this.tasks.addTask(1, new PriestAIHealOthers(this));
-        this.tasks.addTask(2, new EntityAIMoveIndoors(this));
-        this.tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 0.9D, 32.0F));
-        this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F, 0.2F));
-        this.tasks.addTask(3, new EntityAIRestrictOpenDoor(this));
-        this.tasks.addTask(3, new EntityAIMoveThroughVillage(this, 0.5D, true));
-        this.tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, 0.6D));
-        this.tasks.addTask(4, new EntityAIOpenDoor(this, true));
+        this.tasks.addTask(1, new PriestAIAttack(this, 0.6, true));
+        this.tasks.addTask(2, new PriestAIHeal(this));
+        this.tasks.addTask(2, new PriestAIHealOthers(this));
+        this.tasks.addTask(3, new EntityAIMoveIndoors(this));
+        this.tasks.addTask(3, new EntityAIMoveTowardsTarget(this, 0.6D, 32.0F));
+        this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F, 0.2F));
+        this.tasks.addTask(4, new EntityAIRestrictOpenDoor(this));
+        this.tasks.addTask(4, new EntityAIMoveThroughVillage(this, 0.5D, true));
+        this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 0.6D));
+        this.tasks.addTask(5, new EntityAIOpenDoor(this, true));
         this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 0.6D));
         this.tasks.addTask(6, new EntityAILookIdle(this));
 
@@ -131,8 +135,9 @@ public class EntityPriest extends EntityCreature implements IRangedAttackMob
     @Override
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata)
     {
+        livingdata = super.onInitialSpawn(difficulty, livingdata);
         setHeldItem(EnumHand.MAIN_HAND, new ItemStack(ModItems.PRIEST_STAFF));
-        return super.onInitialSpawn(difficulty, livingdata);
+        return livingdata;
     }
 
     @Nullable
@@ -232,16 +237,48 @@ public class EntityPriest extends EntityCreature implements IRangedAttackMob
     @Override
     public boolean attackEntityAsMob(Entity entityIn)
     {
-        this.world.setEntityState(this, (byte)4);
-        boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float)(7 + this.rand.nextInt(15)));
+        super.attackEntityAsMob(entityIn);
+        float damage = (float)this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
+        int knockback = 0;
+
+        if (entityIn instanceof EntityLivingBase)
+        {
+            damage += EnchantmentHelper.getModifierForCreature(this.getHeldItemMainhand(), ((EntityLivingBase) entityIn).getCreatureAttribute());
+            knockback += EnchantmentHelper.getKnockbackModifier(this);
+        }
+
+        boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), damage);
 
         if (flag)
         {
-            entityIn.motionY += 0.4000000059604645D;
+            if (knockback > 0 && entityIn instanceof EntityLivingBase)
+            {
+                ((EntityLivingBase)entityIn).knockBack(this, (float)knockback * 0.5F, MathHelper.sin(this.rotationYaw * 0.017453292F), -MathHelper.cos(this.rotationYaw * 0.017453292F));
+                this.motionX *= 0.6D;
+                this.motionZ *= 0.6D;
+            }
+
+            if (entityIn instanceof EntityPlayer)
+            {
+                EntityPlayer entityplayer = (EntityPlayer)entityIn;
+                ItemStack itemstack = this.getHeldItemMainhand();
+                ItemStack itemstack1 = entityplayer.isHandActive() ? entityplayer.getActiveItemStack() : ItemStack.EMPTY;
+
+                if (!itemstack.isEmpty() && !itemstack1.isEmpty() && itemstack.getItem().canDisableShield(itemstack, itemstack1, entityplayer, this) && itemstack1.getItem().isShield(itemstack1, entityplayer))
+                {
+                    float f1 = 0.25F + (float)EnchantmentHelper.getEfficiencyModifier(this) * 0.05F;
+
+                    if (this.rand.nextFloat() < f1)
+                    {
+                        entityplayer.getCooldownTracker().setCooldown(itemstack1.getItem(), 100);
+                        this.world.setEntityState(entityplayer, (byte)30);
+                    }
+                }
+            }
+
             this.applyEnchantments(this, entityIn);
         }
 
-        this.playSound(SoundEvents.ENTITY_IRONGOLEM_ATTACK, 1.0F, 1.0F);
         return flag;
     }
 
@@ -254,22 +291,35 @@ public class EntityPriest extends EntityCreature implements IRangedAttackMob
     @Override
     public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor)
     {
-//        EntityArrow entityarrow = this.createArrowEntity(distanceFactor);
-//        if (this.getHeldItemMainhand().getItem() instanceof net.minecraft.item.ItemBow)
-//            entityarrow = ((net.minecraft.item.ItemBow) this.getHeldItemMainhand().getItem()).customizeArrow(entityarrow);
-//        double d0 = target.posX - this.posX;
-//        double d1 = target.getEntityBoundingBox().minY + (double)(target.height / 3.0F) - entityarrow.posY;
-//        double d2 = target.posZ - this.posZ;
-//        double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
-//        entityarrow.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.6F, (float)(14 - this.world.getDifficulty().getId() * 4));
-//        this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-//        this.world.spawnEntity(entityarrow);
+        EntityArrow entityarrow = this.createArrowEntity(distanceFactor);
+        if (this.getHeldItemMainhand().getItem() instanceof net.minecraft.item.ItemBow)
+            entityarrow = ((net.minecraft.item.ItemBow) this.getHeldItemMainhand().getItem()).customizeArrow(entityarrow);
+        double d0 = target.posX - this.posX;
+        double d1 = target.getEntityBoundingBox().minY + (double)(target.height / 3.0F) - entityarrow.posY;
+        double d2 = target.posZ - this.posZ;
+        double d3 = (double)MathHelper.sqrt(d0 * d0 + d2 * d2);
+        entityarrow.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.6F, (float)(14 - this.world.getDifficulty().getId() * 4));
+        this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
+        this.world.spawnEntity(entityarrow);
     }
 
     @Override
     public void setSwingingArms(boolean swingingArms)
     {
+        this.dataManager.set(SWINGING_ARMS, swingingArms);
+    }
 
+    @SideOnly(Side.CLIENT)
+    public boolean isSwingingArms()
+    {
+        return this.dataManager.get(SWINGING_ARMS).booleanValue();
+    }
+
+    protected EntityArrow createArrowEntity(float p_193097_1_)
+    {
+        EntityTippedArrow entitytippedarrow = new EntityTippedArrow(this.world, this);
+        entitytippedarrow.setEnchantmentEffectsFromEntity(this, p_193097_1_);
+        return entitytippedarrow;
     }
 
     public void startHealing()
@@ -287,7 +337,7 @@ public class EntityPriest extends EntityCreature implements IRangedAttackMob
         // Apply heal potion effect
         this.healingTarget.addPotionEffect(new PotionEffect(MobEffects.INSTANT_HEALTH, 1, 0));
 
-        FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString("HealingTarget HP: " + this.healingTarget.getHealth()));
+//        FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString("HealingTarget HP: " + this.healingTarget.getHealth()));
     }
 
     @SideOnly(Side.CLIENT)

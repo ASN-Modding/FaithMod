@@ -54,7 +54,7 @@ public class RegistryHandler
                 .entity(EntityPriest.class)
                 .tracker(64, 1, true)
                 .egg(0xFFFFFF, 0xF5F5F5)
-                .spawn(EnumCreatureType.CREATURE, 1, 1, 10, ForgeRegistries.BIOMES.getValues().toArray(new Biome[0]))
+                .spawn(EnumCreatureType.CREATURE, 10, 1, 1, ForgeRegistries.BIOMES.getValues().toArray(new Biome[0]))
                 .build();
 
         event.getRegistry().register(priestEntityEntry);

@@ -1,11 +1,9 @@
-package io.github.asnmodding.crusadermod.client.render;
+package io.github.asnmodding.crusadermod.client.model;
 
 import io.github.asnmodding.crusadermod.common.entity.EntityPriest;
-import net.minecraft.client.model.ModelIllager;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.AbstractIllager;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelPriest extends ModelPlayer
@@ -52,18 +50,27 @@ public class ModelPriest extends ModelPlayer
         this.bipedLeftLeg.rotateAngleY = 0.0F;
         this.bipedRightLeg.rotateAngleY = 0.0F;
 
-        if (entityPriest.hasHealingTarget())
+        if (entityPriest.isSwingingArms())
         {
-            super.bipedRightArm.rotationPointZ = 0.0F;
-            this.bipedRightArm.rotationPointX = -5.0F;
-            this.bipedLeftArm.rotationPointZ = 0.0F;
-            this.bipedLeftArm.rotationPointX = 5.0F;
-            this.bipedRightArm.rotateAngleX = MathHelper.cos(ageInTicks * 0.6662F) * 0.25F;
-            this.bipedLeftArm.rotateAngleX = MathHelper.cos(ageInTicks * 0.6662F) * 0.25F;
-            this.bipedRightArm.rotateAngleZ = 2.3561945F;
-            this.bipedLeftArm.rotateAngleZ = -2.3561945F;
-            this.bipedRightArm.rotateAngleY = 0.0F;
-            this.bipedLeftArm.rotateAngleY = 0.0F;
+            this.bipedRightArm.rotateAngleY = -0.1F + this.bipedHead.rotateAngleY;
+            this.bipedLeftArm.rotateAngleY = 0.1F + this.bipedHead.rotateAngleY + 0.4F;
+            this.bipedRightArm.rotateAngleX = -((float)Math.PI / 2F) + this.bipedHead.rotateAngleX;
+            this.bipedLeftArm.rotateAngleX = -((float)Math.PI / 2F) + this.bipedHead.rotateAngleX;
+
+            float f = MathHelper.sin(this.swingProgress * (float)Math.PI);
+            float f1 = MathHelper.sin((1.0F - (1.0F - this.swingProgress) * (1.0F - this.swingProgress)) * (float)Math.PI);
+            this.bipedRightArm.rotateAngleZ = 0.0F;
+            this.bipedLeftArm.rotateAngleZ = 0.0F;
+            this.bipedRightArm.rotateAngleY = -(0.1F - f * 0.6F);
+            this.bipedLeftArm.rotateAngleY = 0.1F - f * 0.6F;
+            this.bipedRightArm.rotateAngleX = -((float)Math.PI / 2F);
+            this.bipedLeftArm.rotateAngleX = -((float)Math.PI / 2F);
+            this.bipedRightArm.rotateAngleX -= f * 1.2F - f1 * 0.4F;
+            this.bipedLeftArm.rotateAngleX -= f * 1.2F - f1 * 0.4F;
+            this.bipedRightArm.rotateAngleZ += MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;
+            this.bipedLeftArm.rotateAngleZ -= MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;
+            this.bipedRightArm.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
+            this.bipedLeftArm.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
         }
 
         GlStateManager.popMatrix();

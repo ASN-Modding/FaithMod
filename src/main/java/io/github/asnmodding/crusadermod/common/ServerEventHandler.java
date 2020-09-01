@@ -5,6 +5,7 @@ import io.github.asnmodding.crusadermod.common.entity.EntityPriest;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.RayTraceResult;
@@ -32,7 +33,7 @@ public class ServerEventHandler
         // Let's check if the entity comes from monser package.
         if (entity.getClass().getName().contains("net.minecraft.entity.monster"))
         {
-            if (entity instanceof EntityCreature)
+            if (entity instanceof EntityCreature && !(entity instanceof EntityEnderman))
             {
                 EntityCreature entityCreature = (EntityCreature) entity;
                 entityCreature.targetTasks.addTask(4, new EntityAINearestAttackableTarget<>(entityCreature, EntityPriest.class, true));

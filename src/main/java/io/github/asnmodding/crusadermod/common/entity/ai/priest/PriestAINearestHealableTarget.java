@@ -33,7 +33,7 @@ public class PriestAINearestHealableTarget extends EntityAIBase
     public void resetTask()
     {
         this.healableTarget = null;
-        this.priest.setHealingTarget(null);
+//        this.priest.setHealingTarget(null);
     }
 
     @Override
