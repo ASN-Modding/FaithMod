@@ -1,7 +1,7 @@
 package io.github.asnmodding.crusadermod.common;
 
 import io.github.asnmodding.crusadermod.CrusaderMod;
-import io.github.asnmodding.crusadermod.common.entity.PriestVillager;
+import io.github.asnmodding.crusadermod.common.entity.EntityPriest;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.Item;
@@ -13,7 +13,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 @Mod.EventBusSubscriber
@@ -52,7 +51,7 @@ public class RegistryHandler
                 .create()
                 .id(new ResourceLocation(CrusaderMod.MOD_ID, "priest"), getNextEntityId())
                 .name("priest")
-                .entity(PriestVillager.class)
+                .entity(EntityPriest.class)
                 .tracker(64, 1, true)
                 .egg(0xFFFFFF, 0xF5F5F5)
                 .spawn(EnumCreatureType.CREATURE, 1, 1, 10, ForgeRegistries.BIOMES.getValues().toArray(new Biome[0]))

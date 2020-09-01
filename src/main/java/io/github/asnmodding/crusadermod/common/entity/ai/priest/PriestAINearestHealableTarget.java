@@ -1,23 +1,24 @@
 package io.github.asnmodding.crusadermod.common.entity.ai.priest;
 
-import io.github.asnmodding.crusadermod.common.entity.PriestVillager;
+import io.github.asnmodding.crusadermod.common.entity.EntityPriest;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 
 public class PriestAINearestHealableTarget extends EntityAIBase
 {
-    private final PriestVillager priest;
+    private final EntityPriest priest;
     private EntityLivingBase healableTarget;
 
-    public PriestAINearestHealableTarget(PriestVillager priest)
+    public PriestAINearestHealableTarget(EntityPriest priest)
     {
         this.priest = priest;
+        this.setMutexBits(1);
     }
 
     @Override
     public boolean shouldExecute()
     {
-        this.healableTarget = this.priest.getNearestFriendlyEntity();
+        this.healableTarget = this.priest.getNearestWoundedFriendlyEntity();
         return this.healableTarget != null;
     }
 
@@ -32,6 +33,7 @@ public class PriestAINearestHealableTarget extends EntityAIBase
     public void resetTask()
     {
         this.healableTarget = null;
+        this.priest.setHealingTarget(null);
     }
 
     @Override

@@ -3,6 +3,7 @@ package io.github.asnmodding.crusadermod.common;
 import io.github.asnmodding.crusadermod.CrusaderMod;
 import io.github.asnmodding.crusadermod.common.item.ItemHolyIron;
 import io.github.asnmodding.crusadermod.common.item.ItemHolyWater;
+import io.github.asnmodding.crusadermod.common.item.ItemPriestStaff;
 import io.github.asnmodding.crusadermod.common.item.armor.CrusaderBoots;
 import io.github.asnmodding.crusadermod.common.item.armor.CrusaderChestplate;
 import io.github.asnmodding.crusadermod.common.item.armor.CrusaderHelmet;
@@ -21,6 +22,8 @@ public class ModItems
     public static ItemHolyIron HOLY_IRON;
 //    public static ItemHolyWaterSplash HOLY_WATER_SPLASH;
 
+    public static ItemPriestStaff PRIEST_STAFF;
+
     // Armor
     public static CrusaderHelmet CRUSADER_HELMET;
     public static CrusaderChestplate CRUSADER_CHESTPLATE;
@@ -37,6 +40,8 @@ public class ModItems
         HOLY_IRON = new ItemHolyIron();
 //        HOLY_WATER_SPLASH = new ItemHolyWaterSplash();
 
+        PRIEST_STAFF = new ItemPriestStaff();
+
         // Holy Armor
         CRUSADER_HELMET = new CrusaderHelmet();
         CRUSADER_CHESTPLATE = new CrusaderChestplate();
@@ -49,6 +54,8 @@ public class ModItems
         registry.register(HOLY_WATER);
         registry.register(HOLY_IRON);
 
+        registry.register(PRIEST_STAFF);
+
         registry.register(CRUSADER_HELMET);
         registry.register(CRUSADER_CHESTPLATE);
         registry.register(CRUSADER_LEGGINS);
@@ -59,6 +66,8 @@ public class ModItems
     {
         registerModel(HOLY_WATER);
         registerModel(HOLY_IRON);
+
+        registerModel(PRIEST_STAFF);
 
         registerModel(CRUSADER_HELMET);
         registerModel(CRUSADER_CHESTPLATE);

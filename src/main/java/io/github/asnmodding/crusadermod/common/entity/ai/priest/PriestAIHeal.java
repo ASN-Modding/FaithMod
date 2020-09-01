@@ -1,17 +1,16 @@
 package io.github.asnmodding.crusadermod.common.entity.ai.priest;
 
-import io.github.asnmodding.crusadermod.common.entity.PriestVillager;
+import io.github.asnmodding.crusadermod.common.entity.EntityPriest;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.util.EnumParticleTypes;
 
 public class PriestAIHeal extends EntityAIBase
 {
-    private final PriestVillager priest;
+    private final EntityPriest priest;
 
     private int healInterval = 60;
     private int healTime;
 
-    public PriestAIHeal(final PriestVillager priest)
+    public PriestAIHeal(final EntityPriest priest)
     {
         this.priest = priest;
         setMutexBits(3);

@@ -1,6 +1,7 @@
 package io.github.asnmodding.crusadermod.client.render;
 
-import io.github.asnmodding.crusadermod.common.entity.PriestVillager;
+import io.github.asnmodding.crusadermod.CrusaderMod;
+import io.github.asnmodding.crusadermod.common.entity.EntityPriest;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
@@ -10,7 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 
 @SideOnly(Side.CLIENT)
-public class PriestVillagerRender extends RenderLiving<PriestVillager>
+public class PriestVillagerRender extends RenderLiving<EntityPriest>
 {
     public PriestVillagerRender(RenderManager renderManagerIn)
     {
@@ -19,8 +20,8 @@ public class PriestVillagerRender extends RenderLiving<PriestVillager>
 
     @Nullable
     @Override
-    protected ResourceLocation getEntityTexture(PriestVillager entity)
+    protected ResourceLocation getEntityTexture(EntityPriest entity)
     {
-        return new ResourceLocation("textures/entity/alex.png");
+        return new ResourceLocation(CrusaderMod.MOD_ID, "textures/entities/priest.png");
     }
 }

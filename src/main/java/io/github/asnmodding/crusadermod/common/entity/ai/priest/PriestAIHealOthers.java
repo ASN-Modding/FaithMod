@@ -1,17 +1,17 @@
 package io.github.asnmodding.crusadermod.common.entity.ai.priest;
 
-import io.github.asnmodding.crusadermod.common.entity.PriestVillager;
+import io.github.asnmodding.crusadermod.common.entity.EntityPriest;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 
 public class PriestAIHealOthers extends EntityAIBase
 {
-    private final PriestVillager priest;
+    private final EntityPriest priest;
     private int healInterval = 60;
     private int healTime;
     private EntityLivingBase healingTarget;
 
-    public PriestAIHealOthers(PriestVillager priest)
+    public PriestAIHealOthers(EntityPriest priest)
     {
         this.priest = priest;
         setMutexBits(3);
@@ -58,7 +58,9 @@ public class PriestAIHealOthers extends EntityAIBase
 
         this.priest.getLookHelper().setLookPositionWithEntity(this.healingTarget, (float)(this.priest.getHorizontalFaceSpeed() + 20), (float)this.priest.getVerticalFaceSpeed());
 
-        if (this.priest.getDistanceSq(this.healingTarget) < 12.0d)
+        double distance = this.priest.getDistanceSq(this.healingTarget);
+
+        if (distance < 10)
         {
             this.priest.getNavigator().clearPath();
         }
@@ -67,7 +69,7 @@ public class PriestAIHealOthers extends EntityAIBase
             this.priest.getNavigator().tryMoveToEntityLiving(this.healingTarget, 0.6);
         }
 
-        if (this.healingTarget.getDistanceSq(this.priest) <= 10D)
+        if (distance <= 10D)
         {
             this.priest.startHealing();
 

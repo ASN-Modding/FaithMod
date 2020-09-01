@@ -4,11 +4,7 @@ import io.github.asnmodding.crusadermod.client.render.PriestVillagerRender;
 import io.github.asnmodding.crusadermod.common.CommonProxy;
 import io.github.asnmodding.crusadermod.common.ModBlocks;
 import io.github.asnmodding.crusadermod.common.ModTileEntities;
-import io.github.asnmodding.crusadermod.common.entity.PriestVillager;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
+import io.github.asnmodding.crusadermod.common.entity.EntityPriest;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -26,7 +22,7 @@ public class ClientProxy extends CommonProxy
         ModTileEntities.init();
 
         // Register Render
-        RenderingRegistry.registerEntityRenderingHandler(PriestVillager.class, PriestVillagerRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityPriest.class, PriestVillagerRender::new);
     }
 
     @Override
