@@ -5,6 +5,11 @@ item.holy_iron.name=Holy Iron
 item.holy_water_splash.name=Holy Water Splash Potion
 item.priest_staff.name=Priest Staff
 
+item.grappling_hook.name=Grappling Hook
+
+# Blocks
+tile.block_grappling_hook.name=Grappling Hook
+
 # Armor
 item.crusader_helmet.name=Crusader Helmet
 item.crusader_chestplate.name=Crusader Chestplate

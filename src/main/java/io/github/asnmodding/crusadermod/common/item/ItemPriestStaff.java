@@ -70,7 +70,7 @@ public class ItemPriestStaff extends ItemBase
     @SideOnly(Side.CLIENT)
     public void spawnHealParticlesAndPlaySound(final EntityPlayer sourcePlayer, final EntityLivingBase targetEntity)
     {
-        sourcePlayer.world.playSound(sourcePlayer, targetEntity.getPosition(), SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.PLAYERS, 10, 10);
+        sourcePlayer.world.playSound(sourcePlayer, targetEntity.getPosition(), SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.NEUTRAL, 10, 10);
         spawnHealParticles(targetEntity);
     }
 

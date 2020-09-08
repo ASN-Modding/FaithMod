@@ -1,10 +1,15 @@
 package io.github.asnmodding.crusadermod.client;
 
-import io.github.asnmodding.crusadermod.client.renderer.PriestVillagerRender;
+import io.github.asnmodding.crusadermod.client.renderer.RenderGrapplingHook;
+import io.github.asnmodding.crusadermod.client.renderer.RenderPriest;
 import io.github.asnmodding.crusadermod.common.CommonProxy;
 import io.github.asnmodding.crusadermod.common.ModBlocks;
+import io.github.asnmodding.crusadermod.common.ModItems;
 import io.github.asnmodding.crusadermod.common.ModTileEntities;
 import io.github.asnmodding.crusadermod.common.entity.EntityPriest;
+import io.github.asnmodding.crusadermod.common.entity.hook.EntityGrapplingHook;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -17,12 +22,13 @@ public class ClientProxy extends CommonProxy
     {
         super.preInit(event);
 
-        ModBlocks.init();
+//        ModBlocks.init();
 //        ModItems.init();
-        ModTileEntities.init();
+//        ModTileEntities.init();
 
         // Register Render
-        RenderingRegistry.registerEntityRenderingHandler(EntityPriest.class, PriestVillagerRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityPriest.class, RenderPriest::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityGrapplingHook.class, RenderGrapplingHook::new);
     }
 
     @Override

@@ -2,6 +2,7 @@ package io.github.asnmodding.crusadermod.common;
 
 import io.github.asnmodding.crusadermod.CrusaderMod;
 import io.github.asnmodding.crusadermod.common.entity.EntityPriest;
+import io.github.asnmodding.crusadermod.common.entity.hook.EntityGrapplingHook;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.Item;
@@ -50,7 +51,7 @@ public class RegistryHandler
         EntityEntry priestEntityEntry = EntityEntryBuilder
                 .create()
                 .id(new ResourceLocation(CrusaderMod.MOD_ID, "priest"), getNextEntityId())
-                .name("priest")
+                .name(CrusaderMod.MOD_ID + ":" + "priest")
                 .entity(EntityPriest.class)
                 .tracker(64, 1, true)
                 .egg(0xFFFFFF, 0xF5F5F5)
@@ -58,5 +59,15 @@ public class RegistryHandler
                 .build();
 
         event.getRegistry().register(priestEntityEntry);
+
+        EntityEntry grapplingHookEntityEntry = EntityEntryBuilder
+                .create()
+                .id(new ResourceLocation(CrusaderMod.MOD_ID, "grappling_hook"), getNextEntityId())
+                .name(CrusaderMod.MOD_ID + ":" + "grappling_hook")
+                .entity(EntityGrapplingHook.class)
+                .tracker(64, 1, true)
+                .build();
+
+        event.getRegistry().register(grapplingHookEntityEntry);
     }
 }

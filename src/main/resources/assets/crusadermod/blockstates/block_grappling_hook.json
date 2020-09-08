@@ -1,0 +1,16 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "all": "crusadermod:blocks/block_grappling_hook"
+    }
+  },
+  "variants": {
+    "normal": {
+      "model": "crusadermod:block_grappling_hook"
+    },
+    "inventory": {
+      "model": "crusadermod:block_grappling_hook"
+    }
+  }
+}

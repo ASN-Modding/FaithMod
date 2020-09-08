@@ -8,6 +8,7 @@ import io.github.asnmodding.crusadermod.common.item.armor.CrusaderBoots;
 import io.github.asnmodding.crusadermod.common.item.armor.CrusaderChestplate;
 import io.github.asnmodding.crusadermod.common.item.armor.CrusaderHelmet;
 import io.github.asnmodding.crusadermod.common.item.armor.CrusaderLeggings;
+import io.github.asnmodding.crusadermod.common.item.hook.ItemGrapplingHook;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
@@ -23,6 +24,8 @@ public class ModItems
 //    public static ItemHolyWaterSplash HOLY_WATER_SPLASH;
 
     public static ItemPriestStaff PRIEST_STAFF;
+
+    public static ItemGrapplingHook GRAPPLING_HOOK;
 
     // Armor
     public static CrusaderHelmet CRUSADER_HELMET;
@@ -42,6 +45,8 @@ public class ModItems
 
         PRIEST_STAFF = new ItemPriestStaff();
 
+        GRAPPLING_HOOK = new ItemGrapplingHook();
+
         // Holy Armor
         CRUSADER_HELMET = new CrusaderHelmet();
         CRUSADER_CHESTPLATE = new CrusaderChestplate();
@@ -56,6 +61,8 @@ public class ModItems
 
         registry.register(PRIEST_STAFF);
 
+        registry.register(GRAPPLING_HOOK);
+
         registry.register(CRUSADER_HELMET);
         registry.register(CRUSADER_CHESTPLATE);
         registry.register(CRUSADER_LEGGINS);
@@ -68,6 +75,8 @@ public class ModItems
         registerModel(HOLY_IRON);
 
         registerModel(PRIEST_STAFF);
+
+        registerModel(GRAPPLING_HOOK);
 
         registerModel(CRUSADER_HELMET);
         registerModel(CRUSADER_CHESTPLATE);

@@ -12,9 +12,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 
 @SideOnly(Side.CLIENT)
-public class PriestVillagerRender extends RenderLiving<EntityPriest>
+public class RenderPriest extends RenderLiving<EntityPriest>
 {
-    public PriestVillagerRender(RenderManager renderManagerIn)
+    public RenderPriest(RenderManager renderManagerIn)
     {
         super(renderManagerIn, new ModelPriest(), 0.5F);
     }

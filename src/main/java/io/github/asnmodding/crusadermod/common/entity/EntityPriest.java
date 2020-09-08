@@ -119,6 +119,8 @@ public class EntityPriest extends EntityCreature implements IRangedAttackMob
     @Override
     public boolean getCanSpawnHere()
     {
+        //TODO: To verify... not sure if the code below actually works.
+
         final BlockPos blockPos = new BlockPos(this);
         final Village village = super.world.getVillageCollection().getNearestVillage(blockPos, 32);
         if (village == null)
