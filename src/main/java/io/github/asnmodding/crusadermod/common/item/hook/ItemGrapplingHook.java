@@ -1,5 +1,6 @@
 package io.github.asnmodding.crusadermod.common.item.hook;
 
+import io.github.asnmodding.crusadermod.CrusaderMod;
 import io.github.asnmodding.crusadermod.common.entity.hook.EntityGrapplingHook;
 import io.github.asnmodding.crusadermod.common.item.ItemBase;
 import net.minecraft.entity.item.EntityEnderPearl;
@@ -19,6 +20,7 @@ public class ItemGrapplingHook extends ItemBase
     {
         super("grappling_hook");
         setMaxStackSize(1);
+        setCreativeTab(CrusaderMod.CREATIVE_TAB);
     }
 
     public ActionResult<ItemStack> onItemRightClick(final World worldIn, final EntityPlayer playerIn, final EnumHand handIn)

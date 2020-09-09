@@ -28,8 +28,8 @@ public class ItemHolyIron extends ItemBase
 
         if (GuiScreen.isShiftKeyDown())
         {
-            tooltip.add(TextFormatting.YELLOW + "Created by using holy water with iron.");
-            tooltip.add(TextFormatting.YELLOW + "can be used as a crafting ingredient");
+            tooltip.add(TextFormatting.YELLOW + "Created by combining holy water with iron.");
+            tooltip.add(TextFormatting.YELLOW + "Can be used as a crafting ingredient");
             tooltip.add(TextFormatting.YELLOW + "for blocks, tools, weapons and armor.");
         }
     }

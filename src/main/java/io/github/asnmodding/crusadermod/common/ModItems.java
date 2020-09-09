@@ -1,6 +1,7 @@
 package io.github.asnmodding.crusadermod.common;
 
 import io.github.asnmodding.crusadermod.CrusaderMod;
+import io.github.asnmodding.crusadermod.common.item.ItemDivineIron;
 import io.github.asnmodding.crusadermod.common.item.ItemHolyIron;
 import io.github.asnmodding.crusadermod.common.item.ItemHolyWater;
 import io.github.asnmodding.crusadermod.common.item.ItemPriestStaff;
@@ -9,6 +10,7 @@ import io.github.asnmodding.crusadermod.common.item.armor.CrusaderChestplate;
 import io.github.asnmodding.crusadermod.common.item.armor.CrusaderHelmet;
 import io.github.asnmodding.crusadermod.common.item.armor.CrusaderLeggings;
 import io.github.asnmodding.crusadermod.common.item.hook.ItemGrapplingHook;
+import io.github.asnmodding.crusadermod.common.item.tool.ItemDivineSword;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
@@ -24,8 +26,11 @@ public class ModItems
 //    public static ItemHolyWaterSplash HOLY_WATER_SPLASH;
 
     public static ItemPriestStaff PRIEST_STAFF;
-
     public static ItemGrapplingHook GRAPPLING_HOOK;
+
+    // Tools
+    public static ItemDivineIron DIVINE_IRON;
+    public static ItemDivineSword DIVINE_SWORD;
 
     // Armor
     public static CrusaderHelmet CRUSADER_HELMET;
@@ -43,9 +48,14 @@ public class ModItems
         HOLY_IRON = new ItemHolyIron();
 //        HOLY_WATER_SPLASH = new ItemHolyWaterSplash();
 
+        DIVINE_IRON = new ItemDivineIron();
+
         PRIEST_STAFF = new ItemPriestStaff();
 
         GRAPPLING_HOOK = new ItemGrapplingHook();
+
+        //Tools
+        DIVINE_SWORD = new ItemDivineSword();
 
         // Holy Armor
         CRUSADER_HELMET = new CrusaderHelmet();
@@ -59,9 +69,14 @@ public class ModItems
         registry.register(HOLY_WATER);
         registry.register(HOLY_IRON);
 
+        registry.register(DIVINE_IRON);
+
         registry.register(PRIEST_STAFF);
 
         registry.register(GRAPPLING_HOOK);
+
+        //Tools
+        registry.register(DIVINE_SWORD);
 
         registry.register(CRUSADER_HELMET);
         registry.register(CRUSADER_CHESTPLATE);
@@ -74,9 +89,13 @@ public class ModItems
         registerModel(HOLY_WATER);
         registerModel(HOLY_IRON);
 
+        registerModel(DIVINE_IRON);
+
         registerModel(PRIEST_STAFF);
 
         registerModel(GRAPPLING_HOOK);
+
+        registerModel(DIVINE_SWORD);
 
         registerModel(CRUSADER_HELMET);
         registerModel(CRUSADER_CHESTPLATE);

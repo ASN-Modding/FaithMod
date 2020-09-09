@@ -7,7 +7,7 @@ public class ItemBase extends Item
 {
     public ItemBase(final String registryName)
     {
-        setRegistryName(registryName);
+        setRegistryName(CrusaderMod.MOD_ID, registryName);
         setTranslationKey(registryName);
         setCreativeTab(CrusaderMod.CREATIVE_TAB);
     }
