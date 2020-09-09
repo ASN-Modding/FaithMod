@@ -9,6 +9,7 @@ item.grappling_hook.name=Grappling Hook
 
 # Blocks
 tile.block_grappling_hook.name=Grappling Hook
+tile.block_grappling_hook_rope.name=Grappling Hook Rope
 
 # Armor
 item.crusader_helmet.name=Crusader Helmet

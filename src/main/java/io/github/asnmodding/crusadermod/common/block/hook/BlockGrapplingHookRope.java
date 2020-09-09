@@ -1,15 +1,15 @@
 package io.github.asnmodding.crusadermod.common.block.hook;
 
+import io.github.asnmodding.crusadermod.common.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.BlockLadder;
-import net.minecraft.block.BlockVine;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
@@ -17,8 +17,11 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
-public class BlockGrapplingHookLine extends Block
+import java.util.Random;
+
+public class BlockGrapplingHookRope extends Block
 {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
     protected static final AxisAlignedBB LADDER_EAST_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.1875D, 1.0D, 1.0D);
@@ -27,11 +30,11 @@ public class BlockGrapplingHookLine extends Block
     protected static final AxisAlignedBB LADDER_NORTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.8125D, 1.0D, 1.0D, 1.0D);
 
 
-    public BlockGrapplingHookLine()
+    public BlockGrapplingHookRope()
     {
         super(Material.CIRCUITS);
-        setRegistryName("block_grappling_hook_line");
-        setTranslationKey("block_grappling_hook_line");
+        setRegistryName("block_grappling_hook_rope");
+        setTranslationKey("block_grappling_hook_rope");
         setCreativeTab(null);
         setHardness(1);
         setResistance(1);
@@ -106,5 +109,22 @@ public class BlockGrapplingHookLine extends Block
     public boolean isLadder(IBlockState state, IBlockAccess world, BlockPos pos, EntityLivingBase entity)
     {
         return true;
+    }
+
+    @Override
+    public int quantityDropped(IBlockState state, int fortune, Random random)
+    {
+        return 0;
+    }
+
+    @Override
+    public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player)
+    {
+        // Destroy line below
+        while (worldIn.getBlockState(pos).getBlock() == ModBlocks.BLOCK_GRAPPLING_HOOK_LINE)
+        {
+            worldIn.setBlockToAir(pos);
+            pos = pos.down();
+        }
     }
 }

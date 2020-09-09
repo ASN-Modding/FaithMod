@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "all": "crusadermod:blocks/block_grappling_hook_rope"
+    }
+  },
+  "variants": {
+    "facing=north": { "model": "crusadermod:block_grappling_hook_rope" },
+    "facing=east":  { "model": "crusadermod:block_grappling_hook_rope", "y": 90 },
+    "facing=south": { "model": "crusadermod:block_grappling_hook_rope", "y": 180 },
+    "facing=west":  { "model": "crusadermod:block_grappling_hook_rope", "y": 270 },
+    "inventory": {
+      "model": "crusadermod:block_grappling_hook_rope"
+    }
+  }
+}

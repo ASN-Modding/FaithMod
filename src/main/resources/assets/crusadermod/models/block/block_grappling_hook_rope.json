@@ -1,8 +1,8 @@
 {
 	"ambientocclusion": false,
 	"textures": {
-		"particle": "crusadermod:blocks/grappling_hook_line",
-		"texture": "crusadermod:blocks/grappling_hook_line"
+		"particle": "crusadermod:blocks/grappling_hook_rope",
+		"texture": "crusadermod:blocks/grappling_hook_rope"
 	},
 	"elements": [
 		{   "from": [ 0, 0, 15.2 ],

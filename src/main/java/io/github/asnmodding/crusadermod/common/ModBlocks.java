@@ -2,9 +2,8 @@ package io.github.asnmodding.crusadermod.common;
 
 import io.github.asnmodding.crusadermod.common.block.BlockHolyIron;
 import io.github.asnmodding.crusadermod.common.block.hook.BlockGrapplingHook;
-import io.github.asnmodding.crusadermod.common.block.hook.BlockGrapplingHookLine;
+import io.github.asnmodding.crusadermod.common.block.hook.BlockGrapplingHookRope;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockSand;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -14,13 +13,13 @@ public class ModBlocks
 {
     public static BlockHolyIron BLOCK_HOLY_IRON;
     public static BlockGrapplingHook BLOCK_GRAPPLING_HOOK;
-    public static BlockGrapplingHookLine BLOCK_GRAPPLING_HOOK_LINE;
+    public static BlockGrapplingHookRope BLOCK_GRAPPLING_HOOK_LINE;
 
     public static void init()
     {
         BLOCK_HOLY_IRON = new BlockHolyIron();
         BLOCK_GRAPPLING_HOOK = new BlockGrapplingHook();
-        BLOCK_GRAPPLING_HOOK_LINE = new BlockGrapplingHookLine();
+        BLOCK_GRAPPLING_HOOK_LINE = new BlockGrapplingHookRope();
     }
 
     public static void registerModels()
