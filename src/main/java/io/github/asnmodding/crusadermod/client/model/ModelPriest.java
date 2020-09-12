@@ -1,6 +1,8 @@
 package io.github.asnmodding.crusadermod.client.model;
 
 import io.github.asnmodding.crusadermod.common.entity.EntityPriest;
+import net.minecraft.client.model.ModelDragon;
+import net.minecraft.client.model.ModelIllager;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
@@ -19,24 +21,27 @@ public class ModelPriest extends ModelPlayer
     {
         super.render(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 
+
         this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
 
-        this.bipedLeftLegwear.render(scale);
-        this.bipedRightLegwear.render(scale);
-        this.bipedLeftArmwear.render(scale);
-        this.bipedRightArmwear.render(scale);
-        this.bipedBodyWear.render(scale);
-        this.bipedHead.render(scale);
-        this.bipedBody.render(scale);
-        this.bipedRightArm.render(scale);
-        this.bipedLeftArm.render(scale);
-        this.bipedRightLeg.render(scale);
-        this.bipedLeftLeg.render(scale);
-        this.bipedHeadwear.render(scale);
+//        this.bipedLeftLegwear.render(scale);
+//        this.bipedRightLegwear.render(scale);
+//        this.bipedLeftArmwear.render(scale);
+//        this.bipedRightArmwear.render(scale);
+//        this.bipedBodyWear.render(scale);
+//        this.bipedHead.render(scale);
+//        this.bipedBody.render(scale);
+//        this.bipedRightArm.render(scale);
+//        this.bipedLeftArm.render(scale);
+//        this.bipedRightLeg.render(scale);
+//        this.bipedLeftLeg.render(scale);
+//        this.bipedHeadwear.render(scale);
+
+        GlStateManager.pushMatrix();
+
 
         EntityPriest entityPriest = (EntityPriest) entityIn;
 
-        GlStateManager.pushMatrix();
         super.bipedHead.rotateAngleY = netHeadYaw * 0.017453292F;
         super.bipedHead.rotateAngleX = headPitch * 0.017453292F;
         super.bipedLeftArm.rotationPointY = 3.0F;

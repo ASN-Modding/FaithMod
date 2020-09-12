@@ -314,7 +314,7 @@ public class EntityPriest extends EntityCreature implements IRangedAttackMob
     @SideOnly(Side.CLIENT)
     public boolean isSwingingArms()
     {
-        return this.dataManager.get(SWINGING_ARMS).booleanValue();
+        return this.dataManager.get(SWINGING_ARMS);
     }
 
     protected EntityArrow createArrowEntity(float p_193097_1_)
