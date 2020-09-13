@@ -6,9 +6,10 @@
     }
   },
   "variants": {
-    "normal": {
-      "model": "crusadermod:block_grappling_hook"
-    },
+    "facing=north": { "model": "crusadermod:block_grappling_hook" },
+    "facing=east":  { "model": "crusadermod:block_grappling_hook", "y": 90 },
+    "facing=south": { "model": "crusadermod:block_grappling_hook", "y": 180 },
+    "facing=west":  { "model": "crusadermod:block_grappling_hook", "y": 270 },
     "inventory": {
       "model": "crusadermod:block_grappling_hook"
     }

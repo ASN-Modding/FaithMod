@@ -3,7 +3,6 @@ package io.github.asnmodding.crusadermod.common.block.hook;
 import io.github.asnmodding.crusadermod.common.ModBlocks;
 import io.github.asnmodding.crusadermod.common.ModItems;
 import io.github.asnmodding.crusadermod.common.block.BlockBase;
-import net.minecraft.block.BlockLever;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
