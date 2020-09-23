@@ -1,6 +1,0 @@
-{
-  "parent" : "item/generated",
-  "textures" : {
-    "layer0" : "crusadermod:items/armor/crusader_helmet"
-  }
-}
