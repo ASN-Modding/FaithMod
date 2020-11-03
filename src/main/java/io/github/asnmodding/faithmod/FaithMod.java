@@ -1,6 +1,10 @@
 package io.github.asnmodding.faithmod;
 
+import io.github.asnmodding.faithmod.block.ModBlocks;
+import io.github.asnmodding.faithmod.item.ModItems;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
@@ -19,6 +23,16 @@ import java.util.stream.Collectors;
 public class FaithMod
 {
     public static final String MODID = "faithmod";
+
+    public static final ItemGroup ITEM_GROUP = new ItemGroup(FaithMod.MODID)
+    {
+        @Override
+        public ItemStack createIcon()
+        {
+            return new ItemStack(ModBlocks.MYSTICAL_FLOWER);
+        }
+    };
+
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
 
