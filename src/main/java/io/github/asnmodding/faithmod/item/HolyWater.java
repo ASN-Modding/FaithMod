@@ -13,7 +13,7 @@ public class HolyWater extends Item
     public HolyWater()
     {
         super(new Properties().group(FaithMod.ITEM_GROUP).rarity(Rarity.UNCOMMON).maxStackSize(16).setNoRepair());
-        setRegistryName(FaithMod.MODID, "holy_water");
+        setRegistryName(FaithMod.MOD_ID, "holy_water");
     }
 
     public int getUseDuration(ItemStack stack) {

@@ -12,7 +12,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
-@Mod.EventBusSubscriber(modid = FaithMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = FaithMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class WorldGenRegistry
 {
     public static MysticalFlowerFeature MYSTICAL_FLOWER_FEATURE = new MysticalFlowerFeature();
